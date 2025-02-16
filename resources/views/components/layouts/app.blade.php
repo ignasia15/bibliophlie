@@ -78,12 +78,12 @@
         <div class="container">
             <div class="row">
                 <div class="col-12">
-                    <a href="{{ route('home') }}" wire:navigate class="btn" {{ request()->routeIs('home') ? 'btn-primary' : 'btn-outline-primary' }}>Beranda</a>
+                    <a href="{{ route('home') }}" wire:navigate class="btn {{ request()->routeIs('home') ? 'btn-primary' : 'btn-outline-primary' }}">Beranda</a>
                     @if (Auth::user()->peran=='admin')
-                    <a href="{{ route('user') }}" wire:navigate class="btn" {{ request()->routeIs('user') ? 'btn-primary' : 'btn-outline-primary' }}>Pengguna</a>
+                    <a href="{{ route('user') }}" wire:navigate class="btn {{ request()->routeIs('user') ? 'btn-primary' : 'btn-outline-primary' }}">Pengguna</a>
                     @endif
                     @if (Auth::user()->peran=='admin')
-                    <a href="{{ route('produk') }}" wire:navigate class="btn" {{ request()->routeIs('produk') ? 'btn-primary' : 'btn-outline-primary' }}>Produk</a>
+                    <a href="{{ route('produk') }}" wire:navigate class="btn {{ request()->routeIs('produk') ? 'btn-primary' : 'btn-outline-primary' }}">Produk</a>
                     @endif
                     <a href="{{ route('transaksi') }}" wire:navigate class="btn {{ request()->routeIs('transaksi') ? 'btn-primary' : 'btn-outline-primary' }}">Transaksi</a>
                 </div>
@@ -93,14 +93,16 @@
            {{$slot}}
         </main>
     </div>
+    @if (request()->routeIs('home'))
     <div class="container mt-5">
         <div class="row justify-content-center">
             <div class="col-md-8 text-center">
-                <img src="../../assets/images/logos.png"alt="Welcome Image" class="img-fluid mb-4" style="max-width: 100%; height: auto;">
+                <img src="../../assets/images/logos.png" alt="Welcome Image" class="img-fluid mb-4" style="max-width: 100%; height: auto;">
                 <h1 class="display-4">Selamat Datang di Blibliophile</h1>
                 <p class="lead">Kami senang Anda bergabung dengan kami. Jelajahi produk kami dan nikmati pengalaman berbelanja yang menyenangkan.</p>
             </div>
         </div>
     </div>
+    @endif
 </body>
 </html>
