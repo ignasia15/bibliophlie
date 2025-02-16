@@ -1,19 +1,3 @@
-{{-- <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Purple Admin</title>
-    <!-- plugins:css -->
-    <link rel="stylesheet" href="../../assets/vendors/mdi/css/materialdesignicons.min.css">
-    <link rel="stylesheet" href="../../assets/vendors/ti-icons/css/themify-icons.css">
-    <link rel="stylesheet" href="../../assets/vendors/css/vendor.bundle.base.css">
-    <link rel="stylesheet" href="../../assets/vendors/font-awesome/css/font-awesome.min.css">
-    <!-- endinject -->
-    <!-- Layout styles -->
-    <link rel="stylesheet" href="../../assets/css/style.css">
-    <link rel="shortcut icon" href="../../assets/images/favicon.png" />
-</head> --}}
-
 <div>   
     <div class="container">
         <div class="row my-2">
@@ -22,10 +6,12 @@
                 class="btn {{ $pilihanMenu=='lihat' ? 'btn-primary' : 'btn-outline-primary' }}">
                 Semua produk
                 </button>
+                @if (Auth::user()->peran == 'admin')
                 <button wire:click="pilihMenu('tambah')" 
                 class="btn {{ $pilihanMenu=='tambah' ? 'btn-primary' : 'btn-outline-primary' }}">
                 Tambah produk
                 </button>
+                @endif
                 <button wire:loading class="btn btn-info" disabled>
                     Loading...
                 </button>
@@ -47,7 +33,9 @@
                                     <th>Nama</th>
                                     <th>Harga</th>
                                     <th>Stok</th>
+                                    @if (Auth::user()->peran == 'admin')
                                     <th>Aksi</th>
+                                    @endif
                                 </tr>
                             </thead>
                             <tbody>
@@ -59,10 +47,12 @@
                                     <td>{{ $produk->nama }}</td>
                                     <td>{{ $produk->harga }}</td>
                                     <td>{{ $produk->stok }}</td>
+                                    @if (Auth::user()->peran == 'admin')
                                     <td>
                                         <button wire:click="pilihEdit({{ $produk->id }})" class="btn btn-sm btn-warning">Edit</button>
                                         <button wire:click="pilihHapus({{ $produk->id }})" class="btn btn-sm btn-danger">Hapus</button>
                                     </td>
+                                    @endif
                                 </tr>
                                 @endforeach
                             </tbody>

@@ -16,37 +16,45 @@ class Produk extends Component
 
     public function mount()
     {
-        if (Auth::user()->peran != 'admin') {
+        if (Auth::user()->peran != 'admin' && Auth::user()->peran != 'kasir') {
             abort(403);
         }
     }
 
     public function pilihMenu($menu)
     {
-        $this->pilihanMenu = $menu;
+        if (Auth::user()->peran == 'admin') {
+            $this->pilihanMenu = $menu;
+        }
     }
 
     public function pilihEdit($id)
     {
-        $this->produkTerpilih = ModelProduk::findOrFail($id);
-        $this->nama = $this->produkTerpilih->nama;
-        $this->kode = $this->produkTerpilih->kode;
-        $this->harga = $this->produkTerpilih->harga;
-        $this->stok = $this->produkTerpilih->stok;
-        $this->foto = $this->produkTerpilih->foto;
-        $this->pilihanMenu = 'edit';
+        if (Auth::user()->peran == 'admin') {
+            $this->produkTerpilih = ModelProduk::findOrFail($id);
+            $this->nama = $this->produkTerpilih->nama;
+            $this->kode = $this->produkTerpilih->kode;
+            $this->harga = $this->produkTerpilih->harga;
+            $this->stok = $this->produkTerpilih->stok;
+            $this->foto = $this->produkTerpilih->foto;
+            $this->pilihanMenu = 'edit';
+        }
     }
 
     public function pilihHapus($id)
     {
-        $this->produkTerpilih = ModelProduk::findOrFail($id);
-        $this->pilihanMenu = 'hapus';
+        if (Auth::user()->peran == 'admin') {
+            $this->produkTerpilih = ModelProduk::findOrFail($id);
+            $this->pilihanMenu = 'hapus';
+        }
     }
 
     public function hapus()
     {
-        $this->produkTerpilih->delete();
-        $this->pilihanMenu = 'lihat';
+        if (Auth::user()->peran == 'admin') {
+            $this->produkTerpilih->delete();
+            $this->pilihanMenu = 'lihat';
+        }
     }
 
     public function batal()
@@ -56,56 +64,60 @@ class Produk extends Component
 
     public function simpan()
     {
-        $this->validate([
-            'nama' => 'required',
-            'kode' => 'required|min:9',
-            'harga' => 'required|numeric',
-            'stok' => 'required|numeric',
-            'foto' => 'nullable|file|max:1024', // 1MB Max
-        ]);
+        if (Auth::user()->peran == 'admin') {
+            $this->validate([
+                'nama' => 'required',
+                'kode' => 'required|min:9',
+                'harga' => 'required|numeric',
+                'stok' => 'required|numeric',
+                'foto' => 'nullable|max:1024', // 1MB Max
+            ]);
 
-        $fotoPath = $this->foto ? $this->foto->store('produk-foto', 'public') : null;
+            $fotoPath = $this->foto ? $this->foto->store('produk-foto', 'public') : null;
 
-        ModelProduk::create([
-            'nama' => $this->nama,
-            'kode' => $this->kode,
-            'harga' => $this->harga,
-            'stok' => $this->stok,
-            'foto' => $fotoPath,
-        ]);
-
-        $this->pilihanMenu = 'lihat';
-    }
-
-    public function simpanEdit()
-    {
-        $this->validate([
-            'nama' => 'required',
-            'kode' => 'required|min:9',
-            'harga' => 'required|numeric',
-            'stok' => 'required|numeric',
-            'foto' => 'nullable|max:1024', // 1MB Max
-        ]);
-
-        if ($this->foto) {
-            $fotoPath = $this->foto->store('produk-foto', 'public');
-            $this->produkTerpilih->update([
+            ModelProduk::create([
                 'nama' => $this->nama,
                 'kode' => $this->kode,
                 'harga' => $this->harga,
                 'stok' => $this->stok,
                 'foto' => $fotoPath,
             ]);
-        } else {
-            $this->produkTerpilih->update([
-                'nama' => $this->nama,
-                'kode' => $this->kode,
-                'harga' => $this->harga,
-                'stok' => $this->stok,
-            ]);
-        }
 
-        $this->pilihanMenu = 'lihat';
+            $this->pilihanMenu = 'lihat';
+        }
+    }
+
+    public function simpanEdit()
+    {
+        if (Auth::user()->peran == 'admin') {
+            $this->validate([
+                'nama' => 'required',
+                'kode' => 'required|min:9',
+                'harga' => 'required|numeric',
+                'stok' => 'required|numeric',
+                'foto' => 'nullable|max:1024', // 1MB Max
+            ]);
+
+            if ($this->foto) {
+                $fotoPath = $this->foto->store('produk-foto', 'public');
+                $this->produkTerpilih->update([
+                    'nama' => $this->nama,
+                    'kode' => $this->kode,
+                    'harga' => $this->harga,
+                    'stok' => $this->stok,
+                    'foto' => $fotoPath,
+                ]);
+            } else {
+                $this->produkTerpilih->update([
+                    'nama' => $this->nama,
+                    'kode' => $this->kode,
+                    'harga' => $this->harga,
+                    'stok' => $this->stok,
+                ]);
+            }
+
+            $this->pilihanMenu = 'lihat';
+        }
     }
 
     public function render()

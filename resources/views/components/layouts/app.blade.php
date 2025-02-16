@@ -76,15 +76,15 @@
             </div>
         </nav>
         <div class="container">
-            <div class="row">
+            <div class="row mt-3">
                 <div class="col-12">
                     <a href="{{ route('home') }}" wire:navigate class="btn {{ request()->routeIs('home') ? 'btn-primary' : 'btn-outline-primary' }}">Beranda</a>
                     @if (Auth::user()->peran=='admin')
                     <a href="{{ route('user') }}" wire:navigate class="btn {{ request()->routeIs('user') ? 'btn-primary' : 'btn-outline-primary' }}">Pengguna</a>
                     @endif
-                    @if (Auth::user()->peran=='admin')
+                   {{-- @if (Auth::user()->peran=='admin') --}}
                     <a href="{{ route('produk') }}" wire:navigate class="btn {{ request()->routeIs('produk') ? 'btn-primary' : 'btn-outline-primary' }}">Produk</a>
-                    @endif
+                    {{-- @endif --}}
                     <a href="{{ route('transaksi') }}" wire:navigate class="btn {{ request()->routeIs('transaksi') ? 'btn-primary' : 'btn-outline-primary' }}">Transaksi</a>
                 </div>
             </div>
