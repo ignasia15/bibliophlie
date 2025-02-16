@@ -14,11 +14,11 @@
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
 
     <!-- Scripts -->
-   <!-- Latest compiled and minified CSS -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Latest compiled and minified CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
-<!-- Latest compiled JavaScript -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Latest compiled JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
     <div id="app">
@@ -85,13 +85,22 @@
                     @if (Auth::user()->peran=='admin')
                     <a href="{{ route('produk') }}" wire:navigate class="btn" {{ request()->routeIs('produk') ? 'btn-primary' : 'btn-outline-primary' }}>Produk</a>
                     @endif
-                    <a href="{{ route('transaksi') }}" wire:navigate class="btn" {{ request()->routeIs('transaksi') ? 'btn-primary' : 'btn-outline-primary' }}>Transaksi</a>
+                    <a href="{{ route('transaksi') }}" wire:navigate class="btn {{ request()->routeIs('transaksi') ? 'btn-primary' : 'btn-outline-primary' }}">Transaksi</a>
                 </div>
             </div>
         </div>
         <main class="py-4">
            {{$slot}}
         </main>
+    </div>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8 text-center">
+                <img src="../../assets/images/logos.png"alt="Welcome Image" class="img-fluid mb-4" style="max-width: 100%; height: auto;">
+                <h1 class="display-4">Selamat Datang di Blibliophile</h1>
+                <p class="lead">Kami senang Anda bergabung dengan kami. Jelajahi produk kami dan nikmati pengalaman berbelanja yang menyenangkan.</p>
+            </div>
+        </div>
     </div>
 </body>
 </html>
