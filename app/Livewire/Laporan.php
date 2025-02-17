@@ -3,7 +3,8 @@
 namespace App\Livewire;
 
 use Livewire\Component;
-use App\Models\Transaksi as ModelsTransaksi;
+use App\Models\Transaksi;
+use Illuminate\Support\Facades\Auth;
 
 class Laporan extends Component
 {
@@ -11,14 +12,15 @@ class Laporan extends Component
 
     public function mount()
     {
-        $this->semuaTransaksi = ModelsTransaksi::all();
+        if (Auth::user()->peran != 'admin') {
+            abort(403);
+        }
+
+        $this->semuaTransaksi = Transaksi::all();
     }
 
     public function render()
     {
-        $semuaTransaksi = Transaksi::where('status', 'selesai')->get();
-        return view('livewire.laporan')->with([
-            'semuaTransaksi' => $this->semuaTransaksi
-        ]);
+        return view('livewire.laporan');
     }
 }

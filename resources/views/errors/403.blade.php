@@ -7,6 +7,8 @@
     <title>Error</title>
 </head>
 <body>
-    Maaf cowoo/cewe fiksi mu jadi ubi! YAHAHAHA
+    <div class="card-body">
+    Maaf cowo/cewe fiksi mu jadi ubi! YAHAHAHA
+    </div>
 </body>
 </html>

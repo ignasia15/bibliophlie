@@ -86,6 +86,9 @@
                     <a href="{{ route('produk') }}" wire:navigate class="btn {{ request()->routeIs('produk') ? 'btn-primary' : 'btn-outline-primary' }}">Produk</a>
                     {{-- @endif --}}
                     <a href="{{ route('transaksi') }}" wire:navigate class="btn {{ request()->routeIs('transaksi') ? 'btn-primary' : 'btn-outline-primary' }}">Transaksi</a>
+                    @if (Auth::user()->peran=='admin')
+                    <a href="{{ route('laporan') }}" wire:navigate class="btn {{ request()->routeIs('laporan') ? 'btn-primary' : 'btn-outline-primary' }}">Laporan</a>
+                    @endif
                 </div>
             </div>
         </div>
@@ -99,7 +102,7 @@
             <div class="col-md-8 text-center">
                 <img src="../../assets/images/logos.png" alt="Welcome Image" class="img-fluid mb-4" style="max-width: 100%; height: auto;">
                 <h1 class="display-4">Selamat Datang di Blibliophile</h1>
-                <p class="lead">Kami senang Anda bergabung dengan kami. Jelajahi produk kami dan nikmati pengalaman berbelanja yang menyenangkan.</p>
+                <p class="lead">Read, Imagine, Repeat. Manjakan imajinasi kalian dengan memeluk entitas fiksi di sini </br> ^-^</p>
             </div>
         </div>
     </div>
